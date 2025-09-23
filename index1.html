@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Café Emunah</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        :root {
+            --cor-primaria: #bd7e2b;
+            --cor-secundaria: #d4b183;
+            --cor-escura: #311c14;
+            --cor-texto-claro: #f5f5f5;
+            --cor-texto-escuro: #222;
+        }
+
+        body {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            background-color: var(--cor-texto-claro);
+            color: var(--cor-texto-escuro);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* --- Header e Navegação --- */
+        .site-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('imagem/graodecafe.jpeg');
+            background-size: cover;
+            background-position: center;
+            color: var(--cor-texto-claro);
+            height: 50vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        .navbar {
+            background-color: transparent !important;
+            padding: 0;
+        }
+
+        .navbar-brand {
+            color: var(--cor-texto-claro) !important;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .nav-link {
+            color: var(--cor-texto-claro) !important;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--cor-secundaria) !important;
+        }
+
+        .nav-item .nav-link {
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+        
+        @media (max-width: 991px) {
+            .navbar-nav {
+                background-color: rgba(0, 0, 0, 0.8);
+                border-radius: 8px;
+                margin-top: 10px;
+                padding: 10px;
+            }
+
+            .navbar-nav .nav-link {
+                padding: 10px 15px;
+            }
+        }
+
+        .header-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .header-title h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .header-title p {
+            font-size: 1.5rem;
+            font-weight: 400;
+        }
+
+        /* --- Seções de Conteúdo --- */
+        .container-fluid {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .section-title {
+            background-image: linear-gradient(to right, var(--cor-primaria), var(--cor-secundaria));
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .content-block {
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .intro-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .intro-text h2, .intro-text p {
+             font-size: 1.2rem;
+        }
+
+        .intro-image {
+            background-image: url('imagem/peneirafolha.jpg');
+            background-size: cover;
+            background-position: center;
+            min-height: 250px;
+            border-radius: 8px;
+        }
+
+        @media (min-width: 768px) {
+            .intro-section {
+                flex-direction: row;
+                align-items: center;
+            }
+            .intro-text {
+                flex: 2;
+                background-color: var(--cor-escura);
+                color: white;
+                padding: 30px;
+            }
+            .intro-image {
+                flex: 1;
+            }
+        }
+
+        /* --- Seção de Serviços --- */
+        .service-grid {
+            display: grid;
+            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        .service-item {
+            position: relative;
+            min-height: 250px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .service-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .service-item .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .service-item:hover .overlay {
+            opacity: 1;
+        }
+
+        .service-item .overlay-text {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        /* Ajuste do carrossel */
+        .carousel-inner .item img {
+             width: 100%;
+             height: auto;
+             max-height: 500px;
+             object-fit: cover;
+        }
+
+
+        /* --- Seção Sobre Nós --- */
+        .about-us-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .about-text {
+            background-color: white;
+            padding: 20px;
+        }
+
+        .about-image {
+            background-image: url('imagem/ciley1.jpg');
+            background-size: cover;
+            background-position: center;
+            min-height: 250px;
+            border-radius: 8px;
+        }
+
+        @media (min-width: 768px) {
+            .about-us-section {
+                flex-direction: row;
+                align-items: center;
+            }
+            .about-text {
+                flex: 2;
+            }
+            .about-image {
+                flex: 1;
+            }
+        }
+
+        /* --- Seção de Equipe --- */
+        .team-section {
+            text-align: center;
+            padding: 2rem;
+            background-color: #e9ecef;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .team-grid {
+            display: grid;
+            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            justify-items: center;
+        }
+
+        .team-member {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .member-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            border: 5px solid var(--cor-primaria);
+            margin-bottom: 10px;
+        }
+
+        /* --- Formulário de Pedido --- */
+        .negocios {
+            background-color: #f9f9f9;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .negocios h1 {
+            font-size: 2rem;
+            color: var(--cor-escura);
+        }
+
+        .pedido-box {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .form-row > div {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .total-detalhes {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background-color: var(--cor-escura);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+            border-top: 5px solid var(--cor-primaria);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        #logo{
+            width: 200px;
+            height: 200px;
+           position: relative;
+           top:-330px;
+           left: 30px;
+            
+        }
+    </style>
+</head>
+
+<body>
+    <header class="site-header">
+        
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">CAFÉ EMUNAH</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="fas fa-bars text-light"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#home">Início</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#servicos">Serviços</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#sobrenos">Sobre Nós</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contato">Contato</a>
+                        </li>
+                      
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">🛒 Minhas Compras</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="header-title">
+            <h1>O Café que Conecta o Brasil ao Mundo</h1>
+            <p>Os melhores cafés com a qualidade que você merece</p>
+        </div>
+        <img id="logo" src="imagem/logo.png" alt="" srcset="">
+    </header>
+
+    <div class="container-fluid" id="home">
+        <section class="content-block">
+            <div id="meuCarrossel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#meuCarrossel" data-bs-slide-to="0" class="active"></button>
+                    <button type="button" data-bs-target="#meuCarrossel" data-bs-slide-to="1"></button>
+                    <button type="button" data-bs-target="#meuCarrossel" data-bs-slide-to="2"></button>
+                    <button type="button" data-bs-target="#meuCarrossel" data-bs-slide-to="3"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="imagem/muda1.jpg" class="d-block w-100" alt="Plantação de café">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="imagem/muda2.jpg" class="d-block w-100" alt="Muda de café">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="imagem/cafevermelho.jpg" class="d-block w-100" alt="Grãos de café vermelhos">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="imagem/peneira.jpg" class="d-block w-100" alt="Peneira de grãos">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#meuCarrossel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#meuCarrossel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Próximo</span>
+                </button>
+            </div>
+        </section>
+
+        <section class="intro-section">
+            <div class="content-block intro-text">
+                <h2>Bem-vindos ao Café EMUNAH</h2>
+                <p>Nosso foco é buscar as melhores opções de negócios no Brasil para a exportação de cafés de alta qualidade. Nossos serviços vão de ponta a ponta, acompanhando todo o processo até que o café chegue ao seu destino. Hoje, a Café Emunah pode mostrar o quanto somos competitivos, oferecendo opções de qualidade com oportunidades reais.</p>
+            </div>
+            <div class="intro-image"></div>
+        </section>
+
+        <section class="content-block" id="servicos">
+            <h2 class="section-title">Serviços que Vão de Ponta a Ponta</h2>
+            <div class="service-grid mt-4">
+                <div class="service-item">
+                    <img src="imagem/plantacao.png" alt="Plantação de café">
+                    <div class="overlay"><span class="overlay-text">Plantação e Colheita</span></div>
+                </div>
+                <div class="service-item">
+                    <img src="imagem/lavoura.png" alt="Lavoura de café">
+                    <div class="overlay"><span class="overlay-text">Processamento da Lavoura</span></div>
+                </div>
+                <div class="service-item">
+                    <img src="imagem/cafe_no_saco.png" alt="Café em sacos">
+                    <div class="overlay"><span class="overlay-text">Armazenamento</span></div>
+                </div>
+                <div class="service-item">
+                    <img src="imagem/cafe dentro da carreta.png" alt="Café em carreta">
+                    <div class="overlay"><span class="overlay-text">Transporte</span></div>
+                </div>
+                <div class="service-item">
+                    <img src="imagem/emunah escuro.png" alt="Embalagens de café">
+                    <div class="overlay"><span class="overlay-text">Embalagem</span></div>
+                </div>
+                <div class="service-item">
+                    <img src="imagem/podecafeadesivado.jpg" alt="Potes de café adesivados">
+                    <div class="overlay"><span class="overlay-text">Entrega e Distribuição</span></div>
+                </div>
+            </div>
+        </section>
+
+     <section class="negocios" id="contato">
+  <h1>Vamos Fazer Negócios</h1>
+  <p>Escolha o seu café preferido e faça seu pedido agora mesmo:</p>
+  <div class="pedido-box">
+    <h2>Faça seu Pedido</h2>
+    <form id="pedidoForm">
+      <div class="form-row">
+        <div>
+          <label for="produto" class="form-label">Produto</label>
+          <select id="produto" class="form-select" required>
+            <option value="" disabled selected>Selecione</option>
+            <option value="Café Gourmet Torra Clara 250g">Café Gourmet Torra Clara 250g</option>
+            <option value="Café Torra Escura 250g">Café Torra Escura 250g</option>
+            <option value="Café Torra Escura 500g">Café Torra Escura 500g</option>
+          </select>
+        </div>
+        <div>
+          <label for="quantidade" class="form-label">  Quantidade</label>
+          <input type="number" id="quantidade" class="form-control" min="1" value="1" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <label for="cep" class="form-label">CEP</label>
+          <input type="text" id="cep" class="form-control" placeholder="Digite o CEP" required>
+        </div>
+        <div>
+          <label for="cupom" class="form-label">Cupom de Desconto</label>
+          <input type="text" id="cupom" class="form-control" placeholder="Digite o cupom">
+        </div>
+      </div>
+      <div id="total" class="text-start mt-3 fs-5 fw-bold">Total: R$ 0,00</div>
+      <button type="submit" class="btn btn-success w-100 mt-4"> Enviar Pedido via WhatsApp</button>
+    </form>
+  </div>
+</section>
+
+<script>
+  document.getElementById("pedidoForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const produto = document.getElementById("produto").value;
+    const quantidade = document.getElementById("quantidade").value;
+    const cep = document.getElementById("cep").value;
+    const cupom = document.getElementById("cupom").value;
+
+    let mensagem = `*Novo Pedido*%0A`;
+    mensagem += `Produto: ${produto}%0A`;
+    mensagem += `Quantidade: ${quantidade}%0A`;
+    mensagem += `CEP: ${cep}%0A`;
+    if (cupom) {
+      mensagem += `Cupom: ${cupom}%0A`;
+    }
+
+    // Substitua pelo seu número ou link do WhatsApp
+    const whatsappLink = `https://wa.me/5599999999999?text=${mensagem}`;
+
+    window.open(whatsappLink, "_blank");
+  });
+</script>
+
+        <section class="about-us-section" id="sobrenos">
+            <div class="content-block about-text">
+                <h2>Sobre Nós</h2>
+                <h3>Um Pouco da Nossa História</h3>
+                <p>Fundada em 2024, a Café Emunah veio para trazer opções de negócios na compra e venda de café para nossos clientes. Em Minas Gerais, nossa equipe está no mundo do café há 1 ano e meio, agregando novas experiências. Um de nossos maiores desafios é buscar os melhores preços junto aos grandes exportadores, oferecendo soluções de qualidade para ambos, além de acompanhar os processos do início ao fim para garantir a qualidade.</p>
+            </div>
+            <div class="about-image"></div>
+        </section>
+
+        <section class="team-section">
+            <h2 class="section-title mb-4">Nossa Equipe</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-photo" style="background-image: url('imagem/ciley.jpg');"></div>
+                    <p><strong>Glauciley, 33 anos</strong><br>Fundador da Emunah</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-photo" style="background-image: url('imagem/gal.jpg');"></div>
+                    <p><strong>Glaucilene, 36 anos</strong><br>Pedagoga, Acionista e Rep. de Vendas</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-photo" style="background-image: url('imagem/ju.jpg');"></div>
+                    <p><strong>Juciene, 32 anos</strong><br>Acionista e Representante de Vendas</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-photo" style="background-image: url('imagem/lu.jpg');"></div>
+                    <p><strong>Luana, 29 anos</strong><br>Contadora, Acionista e Rep. de Vendas</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        &copy; 2025 Café Emunah. Todos os direitos reservados.
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const PRECOS = {
+            "clara250": 20.00,
+            "escura250": 22.00,
+            "escura500": 40.00
+        };
+        const NOMES = {
+            "clara250": "Café Gourmet Torra Clara 250g",
+            "escura250": "Café Torra Escura 250g",
+            "escura500": "Café Torra Escura 500g"
+        };
+        let descontoAtual = 0;
+
+        const elProduto = document.getElementById("produto");
+        const elQuantidade = document.getElementById("quantidade");
+        const elCep = document.getElementById("cep");
+        const elCupom = document.getElementById("cupom");
+        const elTotal = document.getElementById("total");
+        const form = document.getElementById("pedidoForm");
+
+        function valorFrete() {
+            const cep = (elCep.value || "").replace(/\D/g, "");
+            if (cep.startsWith("30")) return 10.00;
+            if (cep.startsWith("40")) return 15.00;
+            if (cep) return 20.00;
+            return
